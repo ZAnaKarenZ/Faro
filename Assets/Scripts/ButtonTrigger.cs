@@ -19,7 +19,7 @@ public class ButtonTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the collider entering the trigger zone is the player
-        if (other.CompareTag(playerTag))
+        if (other.CompareTag(playerTag) && isFirstButtonPushed == false)
         {
             // Find all GameObjects with the specified tag
             GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
