@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SecondButtonTrigger : MonoBehaviour
 {
@@ -69,7 +70,7 @@ public class SecondButtonTrigger : MonoBehaviour
         // Check if all skeletons are eliminated and print a message
         if (numberOfSkeletons <= 0 && !allSkeletonsEliminated)
         {
-            Debug.Log("All skeletons are eliminated!");
+            SceneManager.LoadScene("Win");
             allSkeletonsEliminated = true;
         }
     }
