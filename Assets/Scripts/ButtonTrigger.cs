@@ -4,27 +4,54 @@ using UnityEngine;
 
 public class ButtonTrigger : MonoBehaviour
 {
-    // Tag or layer name of the player GameObject
+    // Tag del GameObject jugador
     public string playerTag = "Player";
 
-    // Tag of the objects you want to activate/deactivate
+    // Tag de los objetos a activar y desactivar
     public string targetTag = "Skeleton";
 
-     // Flag to track whether the first button is pushed
+     //Bandera para ver si este primer botón ya fue presionado
     private bool isFirstButtonPushed = false;
 
-    // Reference to the second button GameObject
+    //Referencia al segundo botón
     public GameObject secondButton;
+
+    //Creación de corrutinas
+    private IEnumerator corrutinaE;
+    private Coroutine corrutinaC;
+
+    void Start(){
+
+        //Definir corrutinaE
+        corrutinaE = CrearEsqueleto();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the collider entering the trigger zone is the player
+        // Revisar si el jugador es quien entró a la zona del trigger
         if (other.CompareTag(playerTag) && isFirstButtonPushed == false)
+        {
+            //Iniciar la creación de esqueletos en la corrutina
+            corrutinaC = StartCoroutine(corrutinaE);
+
+            //Bandera indica que este primer botón ya fue presionado
+            isFirstButtonPushed = true;
+
+            //Permitir la funcionalidad del segundo botón
+            if (secondButton != null)
+            {
+                secondButton.SetActive(true);
+            }
+        }
+    }
+
+    //Corrutina que crea un nuevo esqueleto cada 4 segundos
+    IEnumerator CrearEsqueleto()
+    {
+        while(true)
         {
             // Find all GameObjects with the specified tag
             GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
-
-            // Activate the Mesh Renderers of all target objects
             foreach (GameObject target in targets)
             {
                 MeshRenderer renderer = target.GetComponent<MeshRenderer>();
@@ -33,15 +60,7 @@ public class ButtonTrigger : MonoBehaviour
                     renderer.enabled = true;
                 }
             }
-
-            // Set the flag to true
-            isFirstButtonPushed = true;
-
-            // Enable the second button GameObject
-            if (secondButton != null)
-            {
-                secondButton.SetActive(true);
-            }
+            yield return new WaitForSeconds(4);
         }
     }
 }
