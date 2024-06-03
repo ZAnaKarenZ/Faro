@@ -5,60 +5,44 @@ using UnityEngine.SceneManagement;
 
 public class SecondButtonTrigger : MonoBehaviour
 {
-    // Tag or layer name of the player GameObject
+    //Tag GameObject jugador
     public string playerTag = "Player";
 
-    // Tag of the objects you want to deactivate
-    public string targetTag = "Skeleton";
-
-    // Flag to track if all skeletons are eliminated
+    //Bandera para ver si se eliminaron todos los esqueletos
     private bool allSkeletonsEliminated = false;
-
-    // List to store the indices of deactivated skeletons
-    private List<int> deactivatedIndices = new List<int>();
 
     private void OnTriggerEnter(Collider other)
     {
-        // Check if the collider entering the trigger zone is the player
+        // Revisar si jugador colisionó con el botón
         if (other.CompareTag(playerTag))
         {
-            // Deactivate a random skeleton's Mesh Renderer
-            DeactivateRandomSkeleton();
+            //Destruir un esqueleto al azar
+            DestroyRandomSkeleton();
         }
     }
 
-    private void DeactivateRandomSkeleton()
+    private void DestroyRandomSkeleton()
     {
-        // Get the list of active skeletons
+        //Obtener la lista de esqueletos que existen
         List<GameObject> targets = ButtonTrigger.activeSkeletons;
 
-        // Find all GameObjects with the specified tag
-        //GameObject[] targets = GameObject.FindGameObjectsWithTag(targetTag);
-
-        // If there are no more skeletons, return
+        //Si no hay esqueletos o si ya se eliminaron, regresar
         if (targets.Count == 0)
         {
             return;
         }
-
-        // If all skeletons are already eliminated, return
         if (allSkeletonsEliminated)
         {
             return;
         }
 
-        // Select a random skeleton
+        //Elegir un esqueleto al azar y eliminarlo
         int randomIndex = Random.Range(0, targets.Count);
-
-        // Destroy the selected skeleton
         GameObject skeletonToDestroy = targets[randomIndex];
-        targets.RemoveAt(randomIndex); // Remove from the list before destroying
+        targets.RemoveAt(randomIndex);
         Destroy(skeletonToDestroy);
 
-        // Add the index to the list of deactivated indices
-        deactivatedIndices.Add(randomIndex);
-
-        // Check if all skeletons are eliminated and print a message
+        //Si se eliminaron todos los esqueletos, jugador gana
         if (targets.Count <= 0 && !allSkeletonsEliminated)
         {
             SceneManager.LoadScene("Win");

@@ -111,7 +111,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     //TRIGGERS
-    //detecta colisión sin reacción física
+    //Detecta colisión sin reacción física
 
     void onTriggerEnter(Collider c)
     {
