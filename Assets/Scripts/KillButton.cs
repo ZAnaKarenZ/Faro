@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SecondButtonTrigger : MonoBehaviour
+public class SecondButtonTrigger : MonoBehaviour, IInteractable
 {
     // Tag or layer name of the player GameObject
     public string playerTag = "Player";
@@ -20,14 +20,10 @@ public class SecondButtonTrigger : MonoBehaviour
     // List to store the indices of deactivated skeletons
     private List<int> deactivatedIndices = new List<int>();
 
-    private void OnTriggerEnter(Collider other)
+    public void Interact()
     {
-        // Check if the collider entering the trigger zone is the player
-        if (other.CompareTag(playerTag))
-        {
-            // Deactivate a random skeleton's Mesh Renderer
+        // Check if the collider entering the trigger zone is the playe
             DeactivateRandomSkeleton();
-        }
     }
 
     private void DeactivateRandomSkeleton()
