@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SecondButtonTrigger : MonoBehaviour
+public class SecondButtonTrigger : MonoBehaviour, IInteractable
 {
+    [SerializeField] private string _prompt;
+    public string InteractionPrompt => _prompt;
     //Tag GameObject jugador
     public string playerTag = "Player";
 
     //Bandera para ver si se eliminaron todos los esqueletos
     private bool allSkeletonsEliminated = false;
 
-    private void OnTriggerEnter(Collider other)
+    public bool Interact(Interactor interactor)
     {
-        // Revisar si jugador colisionó con el botón
-        if (other.CompareTag(playerTag))
-        {
-            //Destruir un esqueleto al azar
-            DestroyRandomSkeleton();
-        }
+
+        DestroyRandomSkeleton();
+
+        return true;
     }
 
     private void DestroyRandomSkeleton()
