@@ -13,7 +13,7 @@ public class PlayerMovement : MonoBehaviour
     private Camera playerCamera;
     
     [SerializeField]
-    private float walkSpeed = 6f;
+    private float walkSpeed = 4f;
     
     [SerializeField]
     private float jumpPower = 7f;

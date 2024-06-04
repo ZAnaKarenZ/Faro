@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class ButtonTrigger : MonoBehaviour
+public class ButtonTrigger : MonoBehaviour, IInteractable
 {
+    [SerializeField] private string _prompt;
+    public string InteractionPrompt => _prompt;
+    
     // Tag del GameObject jugador
     public string playerTag = "Player";
 
@@ -50,11 +53,9 @@ public class ButtonTrigger : MonoBehaviour
         corrutinaE = CrearEsqueleto();
     }
 
-    private void OnTriggerEnter(Collider other)
+    public bool Interact(Interactor interactor)
     {
-        // Revisar si el jugador es quien entró a la zona del trigger
-        if (other.CompareTag(playerTag) && isFirstButtonPushed == false)
-        {
+
             //Iniciar la creación de esqueletos en la corrutina
             if (!isCoroutineRunning && !isFirstButtonPushed)
             {
@@ -71,7 +72,7 @@ public class ButtonTrigger : MonoBehaviour
                 secondButton.SetActive(true);
             }
 
-        }
+        return true;
     }
 
     void Update(){
